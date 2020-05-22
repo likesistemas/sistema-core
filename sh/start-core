@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ -d "${SOURCE_CODE_FOLDER}/" ]; then
+	sudo cp -r ${SOURCE_CODE_FOLDER}/. ${GIT_FOLDER}/;
+fi
+
+set-own ${TEMP_FOLDER}
+set-own ${FILES_FOLDER}
+set-own ${LOGS_FOLDER}
+
+new-folder "${TEMP_FOLDER}/css/"
+new-folder "${TEMP_FOLDER}/js/"
+new-folder "${TEMP_FOLDER}/css/"
+new-folder "${TEMP_FOLDER}/manifest/"
+new-folder "${TEMP_FOLDER}/object/"
+
+configure-db;
+configure-app ${APP_NAME};

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ARQUIVO_APP="${GIT_FOLDER}/app";
+ARQUIVO_PHP_APP="${GIT_FOLDER}/app.php";
+
+if [ -f "${ARQUIVO_APP}" ]; then
+	sudo chmod +x ${ARQUIVO_APP} ${ARQUIVO_PHP_APP}
+	sudo ln -s ${ARQUIVO_APP} /usr/local/bin/${1}
+	sudo chmod +x /usr/local/bin/${1}
+fi;

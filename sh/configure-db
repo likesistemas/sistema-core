@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ -f "${ARQUIVO_CONFIG}" ] && [ -n "$DB_HOST" ]; then
+	if [ -z $DB_TYPE ]; then
+		DB_TYPE='ini';
+	fi
+
+	export DB_TYPE=$DB_TYPE
+
+	set-own ${ARQUIVO_CONFIG}
+
+	if [ "$DB_TYPE" = "ini" ]; then
+		configure-db-ini
+	else
+		configure-db-tstore
+	fi
+else
+	echo "Arquivo não existe ou não foi informado host."
+fi
