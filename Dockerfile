@@ -15,8 +15,6 @@ RUN sudo chmod +x /usr/local/bin/configure-db \
  && sudo chmod +x /usr/local/bin/start-core \
  && sudo chmod +x /usr/local/bin/entrypoint-app
 
-COPY git-sh/ /var/www/php/scripts/
-
 RUN sudo rm index.php
 
 ENV AMBIENTE="producao"
