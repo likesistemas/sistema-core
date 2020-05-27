@@ -1,0 +1,39 @@
+version: '3'
+networks: 
+    lemp:
+        driver: bridge
+
+services:
+
+    app:
+        build: .
+        image: likesistemas/sistema-core:latest
+        container_name: app
+        environment:
+            - PHP_NAME=lemp
+            - APP_NAME=app
+            - DB_HOST=mysql
+            - DB_USER=root
+            - DB_PASSWORD=123456
+            - DB_NAME=app
+        volumes:
+            - ./www/:/var/www/public/
+        networks:
+            - lemp
+
+    nginx:
+        image: likesistemas/nginx:latest
+        container_name: nginx
+        environment:
+            - HOST_PHP=app
+            - PORTA_PHP=9000
+        ports:
+            - 80:80
+        volumes:
+            - ./www/:/var/www/public/
+        links:
+            - app
+        depends_on:
+            - app
+        networks:
+            - lemp
