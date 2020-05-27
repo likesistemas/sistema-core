@@ -2,19 +2,15 @@ name: Docker
 
 on:
   push:
-    # Publish `master` as Docker `latest` image.
     branches:
       - master
 
-    # Publish `v1.2.3` tags as releases.
     tags:
       - v*
 
-  # Run tests for any PRs.
   pull_request:
 
 env:
-  # TODO: Change variable to your image's name.
   IMAGE_NAME: likesistemas/sistema-core
 
 jobs:
@@ -41,7 +37,8 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - uses: docker/build-push-action@v1
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.1.0
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
