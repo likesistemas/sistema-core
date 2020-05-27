@@ -22,9 +22,14 @@ jobs:
         run: |
           docker-compose --file docker-compose.test.yml up --build -d
 
+          docker exec app install-composer
+          docker exec app sudo composer install
+
           CONTENT=$(curl -s "http://127.0.0.1/");
+          APP_CONTENT=$(docker exec app app echo);
 
           echo "CHAMADA HTTP: ${CONTENT}";
+          echo "CHAMADA APP: ${APP_CONTENT}";
 
   push:
     needs: test
