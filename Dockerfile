@@ -13,7 +13,8 @@ RUN sudo chmod +x /usr/local/bin/configure-db \
  && sudo chmod +x /usr/local/bin/set-rown \
  && sudo chmod +x /usr/local/bin/new-folder \
  && sudo chmod +x /usr/local/bin/start-core \
- && sudo chmod +x /usr/local/bin/entrypoint-app
+ && sudo chmod +x /usr/local/bin/entrypoint-app \
+ && sudo chmod +x /usr/local/bin/clear-www
 
 RUN sudo rm index.php
 

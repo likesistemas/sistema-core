@@ -1,0 +1,12 @@
+#!/bin/bash
+
+sudo rm -Rfv compose*
+sudo rm -Rfv *.yml
+sudo rm -Rfv tests/
+sudo rm Dockerfile
+sudo rm -Rfv .docker/
+sudo rm -Rfv phpunit* 
+sudo rm -Rfv .git*
+
+sudo rm -Rfv config-*-padrao.php
+sudo rm config-padrao.ini
