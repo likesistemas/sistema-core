@@ -10,7 +10,6 @@ set-own ${LOGS_FOLDER}
 
 new-folder "${TEMP_FOLDER}/css/"
 new-folder "${TEMP_FOLDER}/js/"
-new-folder "${TEMP_FOLDER}/css/"
 new-folder "${TEMP_FOLDER}/manifest/"
 new-folder "${TEMP_FOLDER}/object/"
 

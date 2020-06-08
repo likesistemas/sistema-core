@@ -14,6 +14,7 @@ RUN sudo chmod +x /usr/local/bin/configure-db \
  && sudo chmod +x /usr/local/bin/new-folder \
  && sudo chmod +x /usr/local/bin/start-core \
  && sudo chmod +x /usr/local/bin/entrypoint-app \
+ && sudo chmod +x /usr/local/bin/entrypoint-core \
  && sudo chmod +x /usr/local/bin/clear-www
 
 RUN sudo rm index.php
@@ -39,4 +40,4 @@ VOLUME ${LOGS_FOLDER}
 
 ENV SOURCE_CODE_FOLDER="/var/src"
 
-CMD start-core && start
+ENTRYPOINT [ "entrypoint-core" ]
