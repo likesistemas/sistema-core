@@ -7,7 +7,6 @@ services:
 
     app:
         build: .
-        image: likesistemas/sistema-core:latest
         container_name: app
         environment:
             - PHP_NAME=lemp
@@ -15,9 +14,24 @@ services:
             - DB_HOST=mysql
             - DB_USER=root
             - DB_PASSWORD=123456
-            - DB_NAME=app
+            - DB_NAME=php
         volumes:
-            - ./www/:/var/www/public/
+            - ./www/:/var/src/
+        networks:
+            - lemp
+        links:
+            - mysql
+        depends_on:
+            - mysql
+
+    mysql:
+        image: mysql:5.5
+        command: --innodb-use-native-aio=0
+        volumes:
+            - core-mysql-data:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456
+            - MYSQL_DATABASE=php
         networks:
             - lemp
 
@@ -37,3 +51,6 @@ services:
             - app
         networks:
             - lemp
+
+volumes:
+    core-mysql-data:

@@ -18,12 +18,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Prepare code
+        run: |
+          docker run -v ${PWD}/www/:/app composer install
+
       - name: Run tests
         run: |
           docker-compose --file docker-compose.test.yml up --build -d
 
-          docker exec app install-composer
-          docker exec app sudo composer install
+          sleep 10;
+
+          docker ps -a
+          docker logs app
 
           CONTENT=$(curl -s "http://127.0.0.1/");
           APP_CONTENT=$(docker exec app app echo);
