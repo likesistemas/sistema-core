@@ -1,0 +1,68 @@
+name: Docker dev
+
+on:
+  push:
+    branches:
+      - master
+
+    tags:
+      - v*
+
+  pull_request:
+
+jobs:
+  
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run tests
+        run: |
+          docker-compose \
+            --file docker-compose.yml \
+            --file docker-compose.dev.yml \
+            up --build -d
+          
+          docker run -t --network lemp jwilder/dockerize \
+            -wait http://core_nginx/ \
+            -timeout 120s
+
+          docker ps -a
+          docker logs app
+
+          CONTENT=$(curl -s "http://127.0.0.1/");
+          APP_CONTENT=$(docker exec app app echo);
+
+          echo "CHAMADA HTTP: ${CONTENT}";
+          echo "CHAMADA APP: ${APP_CONTENT}";
+
+          if [ "${CONTENT}" != "core" ]; then
+            echo "Chamada HTTP retornou errado: ${CONTENT}"
+            exit 1;
+          fi
+
+          if [ "${APP_CONTENT}" != "core" ]; then
+            echo "Chamada APP retornou errado: ${APP_CONTENT}"
+            exit 1;
+          fi
+
+  push:
+    needs: test
+
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1.1.0
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: likesistemas/sistema-core-dev
+          build_args: VERSAO_PHP=likesistemas/php-dev:latest
+          tag_with_ref: true
+          tag_with_sha: true
