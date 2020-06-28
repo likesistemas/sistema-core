@@ -1,4 +1,4 @@
-name: Docker
+name: Docker dev
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker-compose \ 
+          docker-compose \
             --file docker-compose.yml \
             --file docker-compose.dev.yml \
             up --build -d
