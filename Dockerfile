@@ -2,7 +2,7 @@ ARG VERSAO_PHP=likesistemas/php:latest
 
 FROM ${VERSAO_PHP}
 
-ENV BUILD_NR 1
+ENV VERSAO=1.1.0
 
 COPY sh/ /usr/local/bin/
 RUN sudo chmod +x /usr/local/bin/configure-db \

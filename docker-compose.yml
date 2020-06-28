@@ -1,6 +1,7 @@
-version: '3'
+version: '3.5'
 networks: 
     lemp:
+        name: lemp
         driver: bridge
 
 services:
@@ -15,6 +16,9 @@ services:
             - DB_USER=root
             - DB_PASSWORD=123456
             - DB_NAME=php
+            - INSTALL_COMPOSER=true
+            - COMPOSER_INSTALL=true
+            - DB_MIGRATE=true
         volumes:
             - ./www/:/var/src/
         networks:
@@ -37,7 +41,7 @@ services:
 
     nginx:
         image: likesistemas/nginx:latest
-        container_name: nginx
+        container_name: core_nginx
         environment:
             - HOST_PHP=app
             - PORTA_PHP=9000

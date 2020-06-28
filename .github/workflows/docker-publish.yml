@@ -18,15 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Prepare code
-        run: |
-          docker run -v ${PWD}/www/:/app composer install
-
       - name: Run tests
         run: |
-          docker-compose --file docker-compose.test.yml up --build -d
-
-          sleep 10;
+          docker-compose up --build -d
+          
+          docker run -t --network lemp jwilder/dockerize -wait http://core_nginx/ -timeout 30s
 
           docker ps -a
           docker logs app
