@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+
+    app:
+      image: likesistemas/sistema-core-dev
+      build:
+        context: .
+        args:
+          - VERSAO_PHP=likesistemas/php-dev:latest
