@@ -22,7 +22,9 @@ jobs:
         run: |
           docker-compose up --build -d
           
-          docker run -t --network lemp jwilder/dockerize -wait http://core_nginx/ -timeout 30s
+          docker run -t --network lemp jwilder/dockerize \
+            -wait http://core_nginx/ \
+            -timeout 120s
 
           docker ps -a
           docker logs app

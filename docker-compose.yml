@@ -8,6 +8,7 @@ services:
 
     app:
         build: .
+        image: likesistemas/sistema-core:dev
         container_name: app
         environment:
             - PHP_NAME=lemp
