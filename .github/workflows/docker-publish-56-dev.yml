@@ -1,4 +1,4 @@
-name: Docker dev
+name: Docker 5.6 dev
 
 on:
   push:
@@ -25,8 +25,8 @@ jobs:
             --file docker-compose-56.dev.yml \
             up --build -d
           
-          docker run -t --network lemp jwilder/dockerize \
-            -wait http://core_nginx/ \
+          docker run -t --network lemp56 jwilder/dockerize \
+            -wait http://core56_nginx/ \
             -timeout 120s
 
           docker ps -a
