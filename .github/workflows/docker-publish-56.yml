@@ -20,7 +20,7 @@ jobs:
 
       - name: Run tests
         run: |
-          docker-compose up --build -d
+          docker-compose up -f docker-compose-56.yml --build -d
           
           docker run -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
@@ -60,4 +60,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: likesistemas/sistema-core
-          tags: latest,73,7.3
+          build_args: VERSAO_PHP=likesistemas/php:5.6
+          tags: 56,5.6
