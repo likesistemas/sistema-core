@@ -1,0 +1,8 @@
+.git
+.cache
+.idea
+.github
+www/
+www56/
+*.md
+*.yml

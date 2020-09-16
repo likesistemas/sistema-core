@@ -1,17 +1,20 @@
 version: '3.5'
 networks: 
     lemp:
-        name: lemp
+        name: lemp56
         driver: bridge
 
 services:
 
     app:
-        build: .
-        image: likesistemas/sistema-core:dev
-        container_name: app
+        build:
+            context: .
+            args:
+            - VERSAO_PHP=likesistemas/php:56
+        image: likesistemas/sistema-core:56-dev
+        container_name: app56
         environment:
-            - PHP_NAME=lemp
+            - PHP_NAME=lemp56
             - APP_NAME=app
             - DB_HOST=mysql
             - DB_USER=root
@@ -21,7 +24,7 @@ services:
             - COMPOSER_INSTALL=true
             - DB_MIGRATE=true
         volumes:
-            - ./www/:/var/src/
+            - ./www56/:/var/src/
         networks:
             - lemp
         links:
@@ -33,7 +36,7 @@ services:
         image: mysql:5.5
         command: --innodb-use-native-aio=0
         volumes:
-            - core-mysql-data:/var/lib/mysql
+            - core-56-mysql-data:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=123456
             - MYSQL_DATABASE=php
@@ -42,7 +45,7 @@ services:
 
     nginx:
         image: likesistemas/nginx:latest
-        container_name: core_nginx
+        container_name: core56_nginx
         restart: on-failure
         environment:
             - HOST_PHP=app
@@ -50,7 +53,7 @@ services:
         ports:
             - 80:80
         volumes:
-            - ./www/:/var/www/public/
+            - ./www56/:/var/www/public/
         links:
             - app
         depends_on:
@@ -59,4 +62,4 @@ services:
             - lemp
 
 volumes:
-    core-mysql-data:
+    core-56-mysql-data:

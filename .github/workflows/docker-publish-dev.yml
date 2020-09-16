@@ -64,5 +64,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: likesistemas/sistema-core-dev
           build_args: VERSAO_PHP=likesistemas/php-dev:latest
-          tag_with_ref: true
-          tag_with_sha: true
+          tags: latest,73,7.3
