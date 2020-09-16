@@ -1,2 +1,3 @@
 #!/bin/bash
+echo "Alterando dono recursivamente de '${1}'"
 chown -Rf www-data:www-data ${1}

@@ -4,9 +4,9 @@ if [ -d "${SOURCE_CODE_FOLDER}/" ]; then
 	cp -r ${SOURCE_CODE_FOLDER}/. ${PUBLIC_HTML}/;
 fi
 
-set-own ${TEMP_FOLDER}
-set-own ${FILES_FOLDER}
-set-own ${LOGS_FOLDER}
+new-folder ${TEMP_FOLDER}
+new-folder ${FILES_FOLDER}
+new-folder ${LOGS_FOLDER}
 
 new-folder "${TEMP_FOLDER}/css/"
 new-folder "${TEMP_FOLDER}/js/"
