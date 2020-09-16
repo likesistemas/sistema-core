@@ -2,5 +2,6 @@
 
 if [ ! -d "${1}" ]; then
 	mkdir -p ${1}
-	set-own ${1}
 fi
+
+set-own ${1}
