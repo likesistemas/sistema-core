@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo chown www-data:www-data ${1}
+chown www-data:www-data ${1}

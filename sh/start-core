@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ -d "${SOURCE_CODE_FOLDER}/" ]; then
-	sudo cp -r ${SOURCE_CODE_FOLDER}/. ${PUBLIC_HTML}/;
+	cp -r ${SOURCE_CODE_FOLDER}/. ${PUBLIC_HTML}/;
 fi
 
 set-own ${TEMP_FOLDER}

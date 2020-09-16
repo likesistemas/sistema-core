@@ -5,19 +5,19 @@ FROM ${VERSAO_PHP}
 ENV VERSAO=1.1.0
 
 COPY sh/ /usr/local/bin/
-RUN sudo chmod +x /usr/local/bin/configure-db \
- && sudo chmod +x /usr/local/bin/configure-db-ini \
- && sudo chmod +x /usr/local/bin/configure-db-tstore \
- && sudo chmod +x /usr/local/bin/configure-app \
- && sudo chmod +x /usr/local/bin/set-own \
- && sudo chmod +x /usr/local/bin/set-rown \
- && sudo chmod +x /usr/local/bin/new-folder \
- && sudo chmod +x /usr/local/bin/start-core \
- && sudo chmod +x /usr/local/bin/entrypoint-app \
- && sudo chmod +x /usr/local/bin/entrypoint-core \
- && sudo chmod +x /usr/local/bin/clear-www
+RUN chmod +x /usr/local/bin/configure-db \
+ && chmod +x /usr/local/bin/configure-db-ini \
+ && chmod +x /usr/local/bin/configure-db-tstore \
+ && chmod +x /usr/local/bin/configure-app \
+ && chmod +x /usr/local/bin/set-own \
+ && chmod +x /usr/local/bin/set-rown \
+ && chmod +x /usr/local/bin/new-folder \
+ && chmod +x /usr/local/bin/start-core \
+ && chmod +x /usr/local/bin/entrypoint-app \
+ && chmod +x /usr/local/bin/entrypoint-core \
+ && chmod +x /usr/local/bin/clear-www
 
-RUN sudo rm index.php
+RUN rm index.php
 
 ENV AMBIENTE="producao"
 ENV ARQUIVO_CONFIG="config.ini"

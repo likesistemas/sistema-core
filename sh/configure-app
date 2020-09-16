@@ -5,7 +5,7 @@ ARQUIVO_PHP_APP="${PUBLIC_HTML}/app.php";
 
 if [ -f "${ARQUIVO_APP}" ]; then
 	echo "Configurando App '${1}'"
-	sudo chmod +x ${ARQUIVO_APP} ${ARQUIVO_PHP_APP}
-	sudo ln -s ${ARQUIVO_APP} /usr/local/bin/${1}
-	sudo chmod +x /usr/local/bin/${1}
+	chmod +x ${ARQUIVO_APP} ${ARQUIVO_PHP_APP}
+	ln -s ${ARQUIVO_APP} /usr/local/bin/${1}
+	chmod +x /usr/local/bin/${1}
 fi;

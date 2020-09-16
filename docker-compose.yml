@@ -43,6 +43,7 @@ services:
     nginx:
         image: likesistemas/nginx:latest
         container_name: core_nginx
+        restart: on-failure
         environment:
             - HOST_PHP=app
             - PORTA_PHP=9000
