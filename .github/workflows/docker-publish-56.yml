@@ -29,10 +29,10 @@ jobs:
             -timeout 120s
 
           docker ps -a
-          docker logs app
+          docker logs app56
 
           CONTENT=$(curl -s "http://127.0.0.1/");
-          APP_CONTENT=$(docker exec app app echo);
+          APP_CONTENT=$(docker exec app56 app echo);
 
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
