@@ -10,6 +10,7 @@ services:
         build: .
         image: likesistemas/sistema-core:dev
         container_name: app
+        command: app create
         environment:
             - PHP_NAME=lemp
             - APP_NAME=app
@@ -47,10 +48,11 @@ services:
         environment:
             - HOST_PHP=app
             - PORTA_PHP=9000
+            - INDEX_FILE=index.php
         ports:
             - 80:80
         volumes:
-            - ./www/:/var/www/public/
+            - ./www/:/var/www/
         links:
             - app
         depends_on:

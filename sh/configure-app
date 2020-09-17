@@ -1,11 +1,21 @@
 #!/bin/bash
 
-ARQUIVO_APP="${PUBLIC_HTML}/app";
-ARQUIVO_PHP_APP="${PUBLIC_HTML}/app.php";
+source composer-util
 
-if [ -f "${ARQUIVO_APP}" ]; then
+COMPOSER_JSON_HOME=$( get_composer_home )
+ARQUIVO_APP="${COMPOSER_JSON_HOME}/app";
+ARQUIVO_PHP_APP="${COMPOSER_JSON_HOME}/app.php";
+
+if [ -f "${ARQUIVO_PHP_APP}" ]; then
 	echo "Configurando App '${1}'"
-	chmod +x ${ARQUIVO_APP} ${ARQUIVO_PHP_APP}
+	
+	if [ -f "${ARQUIVO_APP}" ]; then
+		chmod +x ${ARQUIVO_APP}
+	else
+		ARQUIVO_APP=/usr/local/bin/run-app;
+	fi
+
+	chmod +x ${ARQUIVO_PHP_APP}
 	ln -s ${ARQUIVO_APP} /usr/local/bin/${1}
 	chmod +x /usr/local/bin/${1}
 fi;

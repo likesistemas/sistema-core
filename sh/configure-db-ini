@@ -1,11 +1,11 @@
 #!/bin/bash
 
 echo "Configurando arquivo e configuração..."
-crudini --set ${ARQUIVO_CONFIG} bd host ${DB_HOST};
-crudini --set ${ARQUIVO_CONFIG} bd user ${DB_USER};
-crudini --set ${ARQUIVO_CONFIG} bd password ${DB_PASSWORD};
-crudini --set ${ARQUIVO_CONFIG} bd bd ${DB_NAME};
+crudini --set ${1} bd host ${DB_HOST};
+crudini --set ${1} bd user ${DB_USER};
+crudini --set ${1} bd password ${DB_PASSWORD};
+crudini --set ${1} bd bd ${DB_NAME};
 
 if [ -n "$SOCKET_HOST" ]; then
-	crudini --set ${ARQUIVO_CONFIG} socket host ${SOCKET_HOST};
+	crudini --set ${1} socket host ${SOCKET_HOST};
 fi

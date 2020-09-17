@@ -15,7 +15,8 @@ RUN chmod +x /usr/local/bin/configure-db \
  && chmod +x /usr/local/bin/start-core \
  && chmod +x /usr/local/bin/entrypoint-app \
  && chmod +x /usr/local/bin/entrypoint-core \
- && chmod +x /usr/local/bin/clear-www
+ && chmod +x /usr/local/bin/clear-www \
+ && chmod +x /usr/local/bin/run-app
 
 RUN rm index.php
 
@@ -24,6 +25,7 @@ ENV ARQUIVO_CONFIG="config.ini"
 ENV MEMCACHE_PORT=11211
 ENV APP_NAME="core"
 
+RUN set-own ${WWW}
 RUN set-own ${PUBLIC_HTML}
 
 ENV FILES_FOLDER="files/"
