@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/bash
 
 source composer-util
 
@@ -14,4 +14,4 @@ if [ ! -f "${PHP_APP}" ]; then
 	PHP_APP="${COMPOSER_JSON_HOME}/app.php";
 fi
 
-run-as-www "${PHP_APP}"
+sudo -u www-data "${PHP_APP}" "$@"

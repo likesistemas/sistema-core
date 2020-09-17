@@ -3,4 +3,5 @@
     "files.associations": {
         "**/sh/**": "shellscript"
     },
+    "files.eol": "\n"
 }

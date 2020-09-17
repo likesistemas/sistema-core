@@ -1,19 +1,28 @@
 #!/bin/bash
 
-if [ -f "${ARQUIVO_CONFIG}" ] && [ -n "$DB_HOST" ]; then
+source composer-util
+
+COMPOSER_JSON_HOME=$( get_composer_home )
+SRC_ARQUIVO_CONFIG="${COMPOSER_JSON_HOME}/${ARQUIVO_CONFIG}"
+
+if [ -f "${SRC_ARQUIVO_CONFIG}" ] && [ -n "$DB_HOST" ]; then
 	if [ -z $DB_TYPE ]; then
 		DB_TYPE='ini';
 	fi
 
 	export DB_TYPE=$DB_TYPE
 
-	set-own ${ARQUIVO_CONFIG}
+	set-own ${SRC_ARQUIVO_CONFIG}
 
 	if [ "$DB_TYPE" = "ini" ]; then
-		configure-db-ini
+		configure-db-ini ${SRC_ARQUIVO_CONFIG}
 	else
-		configure-db-tstore
+		configure-db-tstore ${SRC_ARQUIVO_CONFIG}
 	fi
 else
-	echo "Arquivo não existe ou não foi informado host."
+	if [ -f "${SRC_ARQUIVO_CONFIG}" ]; then
+		echo "config-db: Arquivo não existe.";
+	else
+		echo "config-db: Não foi informado host.";
+	fi
 fi

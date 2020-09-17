@@ -1,8 +1,8 @@
 #!/bin/bash
 
 echo "Configurando o bd...";
-echo "if(!SiteConfig::hasDefinedBd()) { SiteConfig::setBd('${DB_HOST}','${DB_USER}','${DB_PASSWORD}','${DB_NAME}'); }" >> ${ARQUIVO_CONFIG};
+echo "if(!SiteConfig::hasDefinedBd()) { SiteConfig::setBd('${DB_HOST}','${DB_USER}','${DB_PASSWORD}','${DB_NAME}'); }" >> ${1};
 
 if [ -n "$MEMCACHE_HOST" ]; then
-	echo "SiteConfig::setCacheMemcache('${MEMCACHE_HOST}','${MEMCACHE_PORT}');" >> ${ARQUIVO_CONFIG};
+	echo "SiteConfig::setCacheMemcache('${MEMCACHE_HOST}','${MEMCACHE_PORT}');" >> ${1};
 fi

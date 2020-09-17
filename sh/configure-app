@@ -12,7 +12,7 @@ if [ -f "${ARQUIVO_PHP_APP}" ]; then
 	if [ -f "${ARQUIVO_APP}" ]; then
 		chmod +x ${ARQUIVO_APP}
 	else
-		ARQUIVO_APP="/usr/local/bin/run-app ${ARQUIVO_PHP_APP}";
+		ARQUIVO_APP=/usr/local/bin/run-app;
 	fi
 
 	chmod +x ${ARQUIVO_PHP_APP}
