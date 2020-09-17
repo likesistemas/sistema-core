@@ -1,0 +1,17 @@
+#!/usr/bin/env sh
+
+source composer-util
+
+if [ ! -n "${1}" ]; then
+    DIR=$(cd "${0%[/\\]*}" > /dev/null; cd "./" && pwd)
+    PHP_APP="${DIR}/app.php";
+else
+    PHP_APP="${1}";
+fi
+
+if [ ! -f "${PHP_APP}" ]; then
+    COMPOSER_JSON_HOME=$( get_composer_home )
+	PHP_APP="${COMPOSER_JSON_HOME}/app.php";
+fi
+
+run-as-www "${PHP_APP}"
