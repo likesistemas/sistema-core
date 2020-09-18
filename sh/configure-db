@@ -1,9 +1,9 @@
 #!/bin/bash
 
-source composer-util
+source php-utils
 
-COMPOSER_JSON_HOME=$( get_composer_home )
-SRC_ARQUIVO_CONFIG="${COMPOSER_JSON_HOME}/${ARQUIVO_CONFIG}"
+CONFIG_HOME=$(get_filename_home ${ARQUIVO_CONFIG})
+SRC_ARQUIVO_CONFIG="${CONFIG_HOME}/${ARQUIVO_CONFIG}"
 
 if [ -f "${SRC_ARQUIVO_CONFIG}" ] && [ -n "$DB_HOST" ]; then
 	if [ -z $DB_TYPE ]; then
@@ -20,9 +20,9 @@ if [ -f "${SRC_ARQUIVO_CONFIG}" ] && [ -n "$DB_HOST" ]; then
 		configure-db-tstore ${SRC_ARQUIVO_CONFIG}
 	fi
 else
-	if [ -f "${SRC_ARQUIVO_CONFIG}" ]; then
-		echo "config-db: Arquivo não existe.";
+	if [ ! -f "${SRC_ARQUIVO_CONFIG}" ]; then
+		echo "config-db: Arquivo '${SRC_ARQUIVO_CONFIG}' não existe.";
 	else
-		echo "config-db: Não foi informado host.";
+		echo "config-db: Não foi informado host '${DB_HOST}'.";
 	fi
 fi
