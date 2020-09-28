@@ -2,13 +2,15 @@
 
 source php-utils
 
-COMPOSER_JSON_HOME=$( get_composer_home )
-ARQUIVO_APP="${COMPOSER_JSON_HOME}/app";
-ARQUIVO_PHP_APP="${COMPOSER_JSON_HOME}/app.php";
+NOME_ARQUIVO_PHP="app.php"
+NOME_ARQUIVO_APP="app";
+CONFIG_HOME=$(get_filename_home ${NOME_ARQUIVO_PHP})
+ARQUIVO_APP="${CONFIG_HOME}/${NOME_ARQUIVO_APP}";
+ARQUIVO_PHP_APP="${CONFIG_HOME}/${NOME_ARQUIVO_PHP}";
 
 if [ -f "${ARQUIVO_PHP_APP}" ]; then
 	echo "Configurando App '${1}'"
-	
+
 	if [ -f "${ARQUIVO_APP}" ]; then
 		chmod +x ${ARQUIVO_APP}
 	else
@@ -18,4 +20,6 @@ if [ -f "${ARQUIVO_PHP_APP}" ]; then
 	chmod +x ${ARQUIVO_PHP_APP}
 	ln -s ${ARQUIVO_APP} /usr/local/bin/${1}
 	chmod +x /usr/local/bin/${1}
+else
+	echo "Configurando App '${1}' >> Arquivo não encontrado: ${ARQUIVO_PHP_APP}"
 fi;
