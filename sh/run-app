@@ -2,16 +2,18 @@
 
 source php-utils
 
+NOME_ARQUIVO_PHP="app.php"
+
 if [ ! -n "${1}" ]; then
     DIR=$(cd "${0%[/\\]*}" > /dev/null; cd "./" && pwd)
-    PHP_APP="${DIR}/app.php";
+    PHP_APP="${DIR}/${NOME_ARQUIVO_PHP}";
 else
     PHP_APP="${1}";
 fi
 
 if [ ! -f "${PHP_APP}" ]; then
-    COMPOSER_JSON_HOME=$( get_composer_home )
-	PHP_APP="${COMPOSER_JSON_HOME}/app.php";
+    CONFIG_HOME=$(get_filename_home ${NOME_ARQUIVO_PHP})
+	PHP_APP="${CONFIG_HOME}/app.php";
 fi
 
 sudo -u www-data "${PHP_APP}" "$@"

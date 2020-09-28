@@ -9,7 +9,7 @@ if [ -d "${SOURCE_CODE_FOLDER}/" ]; then
 		else
 			cp -r ${SOURCE_CODE_FOLDER}/. ${PUBLIC_HTML}/;
 		fi
-	fi	
+	fi
 fi
 
 new-folder ${TEMP_FOLDER}
