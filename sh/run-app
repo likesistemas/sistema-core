@@ -16,4 +16,4 @@ if [ ! -f "${PHP_APP}" ]; then
 	PHP_APP="${CONFIG_HOME}/app.php";
 fi
 
-sudo -u www-data "${PHP_APP}" "$@"
+sudo -E -u www-data "${PHP_APP}" "$@"
