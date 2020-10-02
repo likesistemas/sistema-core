@@ -8,18 +8,26 @@ CONFIG_HOME=$(get_filename_home ${NOME_ARQUIVO_PHP})
 ARQUIVO_APP="${CONFIG_HOME}/${NOME_ARQUIVO_APP}";
 ARQUIVO_PHP_APP="${CONFIG_HOME}/${NOME_ARQUIVO_PHP}";
 
+BIN_FILENAME=${1:-$APP_NAME}
+BIN_SRC=/usr/local/bin/${BIN_FILENAME}
+
 if [ -f "${ARQUIVO_PHP_APP}" ]; then
-	echo "Configurando App '${1}'"
+	if [ ! -f "${BIN_SRC}" ]; then
+		echo "Configurando App '${BIN_FILENAME}'"
 
-	if [ -f "${ARQUIVO_APP}" ]; then
-		chmod +x ${ARQUIVO_APP}
+		if [ -f "${ARQUIVO_APP}" ]; then
+			chmod +x ${ARQUIVO_APP}
+		else
+			ARQUIVO_APP=/usr/local/bin/run-app;
+		fi
+
+		chmod +x ${ARQUIVO_PHP_APP}
+	
+		ln -s ${ARQUIVO_APP} ${BIN_SRC}
+		chmod +x ${BIN_SRC}
 	else
-		ARQUIVO_APP=/usr/local/bin/run-app;
+		echo "App '${BIN_FILENAME}' jÃ¡ configurado.";
 	fi
-
-	chmod +x ${ARQUIVO_PHP_APP}
-	ln -s ${ARQUIVO_APP} /usr/local/bin/${1}
-	chmod +x /usr/local/bin/${1}
 else
-	echo "Configurando App '${1}' >> Arquivo não encontrado: ${ARQUIVO_PHP_APP}"
-fi;
+	echo "Configurando App '${BIN_FILENAME}' >> Arquivo nï¿½o encontrado: ${ARQUIVO_PHP_APP}"
+fi
