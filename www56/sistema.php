@@ -27,4 +27,6 @@ testWriteFile("logs/dia/", true);
 testWriteFile("files/");
 testWriteFile("files/produto/", true);
 
-echo "core";
+$versaoPhp = explode('.', phpversion());
+echo "core" . "|" . 
+     $versaoPhp[0] . $versaoPhp[1];

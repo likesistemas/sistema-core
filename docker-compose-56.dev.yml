@@ -4,6 +4,8 @@ services:
 
     app:
       image: likesistemas/sistema-core-dev:56
+      environment:
+        - INSTALL_COMPOSER=false
       build:
         context: .
         args:

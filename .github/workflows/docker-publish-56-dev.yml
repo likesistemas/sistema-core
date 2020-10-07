@@ -38,12 +38,12 @@ jobs:
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
 
-          if [ "${CONTENT}" != "core" ]; then
+          if [ "${CONTENT}" != "core|56" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
-          if [ "${APP_CONTENT}" != "core" ]; then
+          if [ "${APP_CONTENT}" != "core|56" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi

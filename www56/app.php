@@ -10,17 +10,18 @@ require __DIR__ . '/vendor/autoload.php';
 
 class EchoCommand extends Command {
 
-    public function __construct() {
-		parent::__construct('echo');
-    }
+  public function __construct() {
+    parent::__construct('echo');
+  }
 
-    protected function configure() {
-        $this->setDescription('Faz um echo.');
-    }
+  protected function configure() {
+     $this->setDescription('Faz um echo.');
+  }
 
 	protected function execute(InputInterface $input, OutputInterface $output) {
-        $output->write('core');
-        return 0;
+    $versaoPhp = explode('.', phpversion());
+    $output->write('core|' . $versaoPhp[0] . $versaoPhp[1]);
+    return 0;
 	}
 
 }
