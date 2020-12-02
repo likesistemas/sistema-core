@@ -1,4 +1,4 @@
-name: Docker 5.6 dev
+name: PHP 5.6 dev
 
 on:
   push:
