@@ -10,7 +10,7 @@ services:
         build:
             context: .
             args:
-            - VERSAO_PHP=likesistemas/php:73
+            - VERSAO_PHP=likesistemas/php:80
         image: likesistemas/sistema-core:dev
         container_name: app
         command: app create
@@ -25,7 +25,7 @@ services:
             - COMPOSER_INSTALL=true
             - DB_MIGRATE=true
         volumes:
-            - ./www73/:/var/src/
+            - ./www80/:/var/src/
         networks:
             - lemp
         links:
@@ -55,7 +55,7 @@ services:
         ports:
             - 80:80
         volumes:
-            - ./www73/:/var/www/
+            - ./www80/:/var/www/
         links:
             - app
         depends_on:
