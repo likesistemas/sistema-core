@@ -22,7 +22,7 @@ services:
             - COMPOSER_INSTALL=true
             - DB_MIGRATE=true
         volumes:
-            - ./www/:/var/src/
+            - ./www73/:/var/src/
         networks:
             - lemp
         links:
@@ -52,7 +52,7 @@ services:
         ports:
             - 80:80
         volumes:
-            - ./www/:/var/www/
+            - ./www73/:/var/www/
         links:
             - app
         depends_on:
