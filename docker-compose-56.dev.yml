@@ -3,7 +3,7 @@ version: '3.5'
 services:
 
     app:
-      image: likesistemas/sistema-core-dev:56
+      image: likesistemas/sistema-core-dev:56-dev
       environment:
         - INSTALL_COMPOSER=false
       build:

@@ -1,4 +1,4 @@
-name: PHP 7.3
+name: PHP 7.4
 
 on:
   push:
@@ -21,14 +21,12 @@ jobs:
       - name: Prepare code
         run: |
           touch .env
-          echo "VERSAO_BUILD=73" >> .env
-          echo "VERSAO=73-dev" >> .env
+          echo "VERSAO_BUILD=74" >> .env
+          echo "VERSAO=74-dev" >> .env
 
       - name: Run tests dev
         run: |
-          docker-compose \
-            --file docker-compose-73.yml \
-            up --build -d
+          docker-compose -f docker-compose-74.yml up --build -d
           
           echo $(docker run -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
@@ -43,27 +41,22 @@ jobs:
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
 
-          if [ "${CONTENT}" != "core|73" ]; then
+          if [ "${CONTENT}" != "core|74" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
-          if [ "${APP_CONTENT}" != "core|73" ]; then
+          if [ "${APP_CONTENT}" != "core|74" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi
 
-          docker-compose \
-            --file docker-compose-73.yml \
-            down -v
+          docker-compose -f docker-compose-74.yml down -v
 
       - name: Run tests prod
         run: |
-          docker-compose \
-            --file docker-compose-73.yml \
-            --file docker-compose.prod.yml \
-            up --build -d
-          
+          docker-compose -f docker-compose-74.yml -f docker-compose.prod.yml up --build -d
+
           echo $(docker run -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
             -timeout 60s)
@@ -77,12 +70,12 @@ jobs:
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
 
-          if [ "${CONTENT}" != "core|73" ]; then
+          if [ "${CONTENT}" != "core|74" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
-          if [ "${APP_CONTENT}" != "core|73" ]; then
+          if [ "${APP_CONTENT}" != "core|74" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi
@@ -112,27 +105,25 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1 
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
-      
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           build-args: |
-            VERSAO_PHP=likesistemas/php:73
+            VERSAO_PHP=likesistemas/php:74
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           tags: |
-            likesistemas/sistema-core:latest
-            likesistemas/sistema-core:73
-            likesistemas/sistema-core:7.3
-            ghcr.io/likesistemas/sistema-core:latest
-            ghcr.io/likesistemas/sistema-core:73
-            ghcr.io/likesistemas/sistema-core:7.3
+            likesistemas/sistema-core:74
+            likesistemas/sistema-core:7.4
+            ghcr.io/likesistemas/sistema-core:74
+            ghcr.io/likesistemas/sistema-core:7.4
