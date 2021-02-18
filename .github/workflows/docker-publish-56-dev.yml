@@ -25,6 +25,7 @@ jobs:
           echo "VERSAO_BUILD=56-dev" >> .env
           echo "IMAGE=sistema-core-dev" >> .env
           echo "VERSAO=56-dev" >> .env
+          echo "PASTA_WWW=www56" >> .env
 
       - name: Run tests dev
         run: |
@@ -64,7 +65,7 @@ jobs:
       - name: Run tests prod
         run: |
           docker-compose \
-            --file docker-compose-56.yml \            
+            --file docker-compose-56.yml \
             --file docker-compose-56.dev.yml \
             --file docker-compose.prod.yml \
             up --build -d
