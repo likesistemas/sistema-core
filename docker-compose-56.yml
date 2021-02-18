@@ -25,7 +25,7 @@ services:
             - COMPOSER_INSTALL=true
             - DB_MIGRATE=true
         volumes:
-            - ./www56/:/var/www/
+            - ./www56/:/var/src/
         networks:
             - lemp
         links:
