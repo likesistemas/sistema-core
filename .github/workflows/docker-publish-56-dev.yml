@@ -33,9 +33,9 @@ jobs:
             --file docker-compose-56.dev.yml \
             up --build -d
           
-          docker run -t --network lemp56 jwilder/dockerize \
+          echo $(docker run -t --network lemp56 jwilder/dockerize \
             -wait http://core56_nginx/ \
-            -timeout 120s
+            -timeout 60s)
 
           docker ps -a
           docker logs app56
@@ -69,9 +69,9 @@ jobs:
             --file docker-compose.prod.yml \
             up --build -d
 
-          docker run -t --network lemp56 jwilder/dockerize \
+          echo $(docker run -t --network lemp56 jwilder/dockerize \
             -wait http://core56_nginx/ \
-            -timeout 120s
+            -timeout 60s)
 
           docker ps -a
           docker logs app56

@@ -64,7 +64,7 @@ jobs:
           docker-compose \
             --file docker-compose-74.yml \
             --file docker-compose-74.dev.yml \
-            --file docker-compose.prod.yml
+            --file docker-compose.prod.yml \
             up --build -d
           
           echo $(docker run -t --network lemp jwilder/dockerize \
