@@ -21,7 +21,6 @@ jobs:
       - name: Prepare code
         run: |
           touch .env
-          echo "VERSAO_BUILD=80" >> .env
           echo "VERSAO=80-dev" >> .env
 
       - name: Run tests dev 

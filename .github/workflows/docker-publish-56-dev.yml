@@ -20,8 +20,9 @@ jobs:
 
       - name: Prepare code
         run: |
-          touch .env          
-          echo "VERSAO_BUILD=56" >> .env
+          touch .env
+          echo "IMAGE_BUILD=sistema-core-dev" >> .env
+          echo "VERSAO_BUILD=56-dev" >> .env
           echo "IMAGE=sistema-core-dev" >> .env
           echo "VERSAO=56-dev" >> .env
 
