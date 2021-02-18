@@ -13,6 +13,7 @@ services:
             - VERSAO_PHP=likesistemas/php:56
         image: likesistemas/sistema-core:56-dev
         container_name: app56
+        command: app create
         environment:
             - PHP_NAME=lemp56
             - APP_NAME=app

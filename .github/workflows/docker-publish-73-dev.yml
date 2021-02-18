@@ -18,11 +18,53 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run tests
+      - name: Prepare code
+        run: |
+          touch .env
+          echo "IMAGE=sistema-core-dev" >> .env
+          echo "VERSAO=73-dev" >> .env
+
+      - name: Run tests dev
         run: |
           docker-compose \
             --file docker-compose-73.yml \
             --file docker-compose-73.dev.yml \
+            up --build -d
+          
+          echo $(docker run -t --network lemp jwilder/dockerize \
+            -wait http://core_nginx/ \
+            -timeout 60s)
+
+          docker ps -a
+          docker logs app
+
+          CONTENT=$(curl -s "http://127.0.0.1/");
+          APP_CONTENT=$(docker exec app app echo);
+
+          echo "CHAMADA HTTP: ${CONTENT}";
+          echo "CHAMADA APP: ${APP_CONTENT}";
+
+          if [ "${CONTENT}" != "core|73" ]; then
+            echo "Chamada HTTP retornou errado: ${CONTENT}"
+            exit 1;
+          fi
+
+          if [ "${APP_CONTENT}" != "core|73" ]; then
+            echo "Chamada APP retornou errado: ${APP_CONTENT}"
+            exit 1;
+          fi
+
+          docker-compose \
+            --file docker-compose-73.yml \
+            --file docker-compose-73.dev.yml \
+            down -v
+
+      - name: Run tests prod
+        run: |
+          docker-compose \
+            --file docker-compose-73.yml \
+            --file docker-compose-73.dev.yml \
+            --file docker-compose.prod.yml \
             up --build -d
           
           echo $(docker run -t --network lemp jwilder/dockerize \

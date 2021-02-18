@@ -1,0 +1,27 @@
+ARG IMAGE_BUILD=sistema-core-dev
+ARG VERSAO_BUILD=latest
+ARG IMAGE=sistema-core
+ARG VERSAO=latest
+ARG PASTA_WWW=www73
+
+FROM likesistemas/${IMAGE_BUILD}:${VERSAO_BUILD} as build
+ARG PASTA_WWW
+WORKDIR /var/src/
+RUN echo "PASTA_WWW >> ${PASTA_WWW}"
+COPY ./${PASTA_WWW}/composer.json ./${PASTA_WWW}/composer.lock ./
+RUN composer-config
+RUN composer install -a --no-dev --no-scripts
+COPY ./${PASTA_WWW}/ .
+RUN rm -v composer.json composer.lock \
+ && touch composer.json \
+ && ls -la
+
+FROM likesistemas/${IMAGE}:${VERSAO}
+
+COPY --from=build /var/src/ ${SOURCE_CODE_FOLDER}
+RUN set-rown ${SOURCE_CODE_FOLDER} \
+ && ls -la ${SOURCE_CODE_FOLDER}
+
+ENV PHP_NAME=app-producao
+ENV APP_NAME=app-producao
+ENV OPCACHE=1

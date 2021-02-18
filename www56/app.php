@@ -26,6 +26,25 @@ class EchoCommand extends Command {
 
 }
 
+class CreateTempFilesCommand extends Command {
+
+  public function __construct() {
+    parent::__construct('create');
+  }
+
+  protected function configure() {
+      $this->setDescription('Cria os arquivos temporários.');
+  }
+
+  protected function execute(InputInterface $input, OutputInterface $output) {
+    testWriteFile('temp/nfe/session/1/',true);
+    testWriteFile('logs/dia/hoje/',true);
+    return 0;
+  }
+
+}
+
 $application = new Application('core','1.0.0');
 $application->add( new EchoCommand() );
+$application->add( new CreateTempFilesCommand() );
 $application->run();

@@ -1,7 +1,8 @@
 {
     "files.encoding": "utf8",
     "files.associations": {
-        "**/sh/**": "shellscript"
+        "**/sh/**": "shellscript",
+        "**/events/**": "shellscript"
     },
     "files.eol": "\n"
 }

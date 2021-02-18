@@ -2,8 +2,11 @@
 .cache
 .idea
 .github
-www73/
-www56/
-www80/
 *.md
 *.yml
+.gitignore
+**/node_modules
+**/vendor
+**/temp
+**/logs
+**/files

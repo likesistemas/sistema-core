@@ -11,7 +11,7 @@ services:
             context: .
             args:
             - VERSAO_PHP=likesistemas/php:80
-        image: likesistemas/sistema-core:dev
+        image: likesistemas/sistema-core:80-dev
         container_name: app
         command: app create
         environment:

@@ -9,14 +9,15 @@ RUN chmod +x /usr/local/bin/configure-db \
  && chmod +x /usr/local/bin/configure-db-ini \
  && chmod +x /usr/local/bin/configure-db-tstore \
  && chmod +x /usr/local/bin/configure-app \
+ && chmod +x /usr/local/bin/configure-volumes \
  && chmod +x /usr/local/bin/set-own \
  && chmod +x /usr/local/bin/set-rown \
  && chmod +x /usr/local/bin/new-folder \
- && chmod +x /usr/local/bin/start-core \
  && chmod +x /usr/local/bin/entrypoint-app \
- && chmod +x /usr/local/bin/entrypoint-core \
  && chmod +x /usr/local/bin/clear-www \
  && chmod +x /usr/local/bin/run-app
+
+COPY events/ /var/events/
 
 RUN rm index.php
 
@@ -28,18 +29,6 @@ ENV APP_NAME="core"
 RUN set-own ${WWW}
 RUN set-own ${PUBLIC_HTML}
 
-ENV FILES_FOLDER="files/"
-RUN new-folder ${FILES_FOLDER}
-VOLUME ${FILES_FOLDER}
-
-ENV TEMP_FOLDER="temp/"
-RUN new-folder ${TEMP_FOLDER}
-VOLUME ${TEMP_FOLDER}
-
-ENV LOGS_FOLDER="logs/"
-RUN new-folder ${LOGS_FOLDER}
-VOLUME ${LOGS_FOLDER}
-
-ENV SOURCE_CODE_FOLDER="/var/src"
-
-ENTRYPOINT [ "entrypoint-core" ]
+ENV FILES_FOLDER="files"
+ENV TEMP_FOLDER="temp"
+ENV LOGS_FOLDER="logs"

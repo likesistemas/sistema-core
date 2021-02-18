@@ -1,4 +1,4 @@
-name: PHP 5.6 dev
+name: PHP 7.4
 
 on:
   push:
@@ -21,74 +21,60 @@ jobs:
       - name: Prepare code
         run: |
           touch .env
-          echo "IMAGE_BUILD=sistema-core-dev" >> .env
-          echo "VERSAO_BUILD=56-dev" >> .env
-          echo "IMAGE=sistema-core-dev" >> .env
-          echo "VERSAO=56-dev" >> .env
-          echo "PASTA_WWW=www56" >> .env
+          echo "VERSAO=74-dev" >> .env
 
       - name: Run tests dev
         run: |
-          docker-compose \
-            --file docker-compose-56.yml \
-            --file docker-compose-56.dev.yml \
-            up --build -d
+          docker-compose -f docker-compose-74.yml up --build -d
           
-          echo $(docker run -t --network lemp56 jwilder/dockerize \
-            -wait http://core56_nginx/ \
+          echo $(docker run -t --network lemp jwilder/dockerize \
+            -wait http://core_nginx/ \
             -timeout 60s)
 
           docker ps -a
-          docker logs app56
+          docker logs app
 
           CONTENT=$(curl -s "http://127.0.0.1/");
-          APP_CONTENT=$(docker exec app56 app echo);
+          APP_CONTENT=$(docker exec app app echo);
 
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
 
-          if [ "${CONTENT}" != "core|56" ]; then
+          if [ "${CONTENT}" != "core|74" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
-          if [ "${APP_CONTENT}" != "core|56" ]; then
+          if [ "${APP_CONTENT}" != "core|74" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi
 
-          docker-compose \
-            --file docker-compose-56.yml \
-            --file docker-compose-56.dev.yml \
-            down -v
+          docker-compose -f docker-compose-74.yml down -v
 
       - name: Run tests prod
         run: |
-          docker-compose \
-            --file docker-compose-56.yml \
-            --file docker-compose-56.dev.yml \
-            --file docker-compose.prod.yml \
-            up --build -d
+          docker-compose -f docker-compose-74.yml -f docker-compose.prod.yml up --build -d
 
-          echo $(docker run -t --network lemp56 jwilder/dockerize \
-            -wait http://core56_nginx/ \
+          echo $(docker run -t --network lemp jwilder/dockerize \
+            -wait http://core_nginx/ \
             -timeout 60s)
 
           docker ps -a
-          docker logs app56
+          docker logs app
 
           CONTENT=$(curl -s "http://127.0.0.1/");
-          APP_CONTENT=$(docker exec app56 app echo);
+          APP_CONTENT=$(docker exec app app echo);
 
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
 
-          if [ "${CONTENT}" != "core|56" ]; then
+          if [ "${CONTENT}" != "core|74" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
-          if [ "${APP_CONTENT}" != "core|56" ]; then
+          if [ "${APP_CONTENT}" != "core|74" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi
@@ -101,7 +87,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -119,25 +104,25 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1 
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
-      
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           build-args: |
-            VERSAO_PHP=likesistemas/php-dev:56
+            VERSAO_PHP=likesistemas/php:74
           push: true
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
           tags: |
-            likesistemas/sistema-core-dev:56
-            likesistemas/sistema-core-dev:5.6
-            ghcr.io/likesistemas/sistema-core-dev:56
-            ghcr.io/likesistemas/sistema-core-dev:5.6
+            likesistemas/sistema-core:74
+            likesistemas/sistema-core:7.4
+            ghcr.io/likesistemas/sistema-core:74
+            ghcr.io/likesistemas/sistema-core:7.4
