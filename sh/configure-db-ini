@@ -6,6 +6,10 @@ crudini --set ${1} bd user ${DB_USER};
 crudini --set ${1} bd password ${DB_PASSWORD};
 crudini --set ${1} bd bd ${DB_NAME};
 
+if [ -n "$DB_HOST_SLAVE" ]; then
+	crudini --set ${1} bd hostSlave ${DB_HOST_SLAVE};
+fi
+
 if [ -n "$SOCKET_HOST" ]; then
 	crudini --set ${1} socket host ${SOCKET_HOST};
 fi
