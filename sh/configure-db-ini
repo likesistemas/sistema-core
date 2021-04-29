@@ -13,3 +13,8 @@ fi
 if [ -n "$SOCKET_HOST" ]; then
 	crudini --set ${1} socket host ${SOCKET_HOST};
 fi
+
+if [ -n "$MEMCACHE_HOST" ]; then
+	crudini --set ${1} session tipo memcache;
+	crudini --set ${1} session dsnMemcache memcached://${MEMCACHE_HOST}:${MEMCACHE_PORT:-11211};
+fi
