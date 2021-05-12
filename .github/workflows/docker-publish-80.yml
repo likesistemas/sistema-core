@@ -57,10 +57,10 @@ jobs:
           APP_RUN=$(docker-compose -f docker-compose-80.yml run -w /var/www/ --entrypoint entrypoint-app app echo)
           echo "CHAMADA APP: ${APP_RUN}";
 
-          if [[ ! "${APP_RUN}" =~ "core|80" ]];
+          if [[ ! "${APP_RUN}" =~ "core|80" ]]; then
             echo "Chamada APP retornou errado: ${APP_RUN}"
             exit 1;
-          fi      
+          fi
 
       - name: Run tests prod
         run: |
