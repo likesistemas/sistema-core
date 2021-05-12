@@ -52,6 +52,16 @@ jobs:
 
           docker-compose -f docker-compose-74.yml down -v
 
+      - name: Run tests app
+        run: |
+          APP_RUN=$(docker-compose -f docker-compose-74.yml run -w /var/www/ --entrypoint entrypoint-app app echo)
+          echo "CHAMADA APP: ${APP_RUN}";
+
+          if [[ ! "${APP_RUN}" =~ "core|74" ]]; then
+            echo "Chamada APP retornou errado: ${APP_RUN}"
+            exit 1;
+          fi
+
       - name: Run tests prod
         run: |
           docker-compose -f docker-compose-74.yml -f docker-compose.prod.yml up --build -d
