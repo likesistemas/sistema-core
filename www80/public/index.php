@@ -49,7 +49,7 @@ foreach($expectedConfig as $section => $values) {
                continue;
           }
 
-          if( $config[$section[$name]] != $value ) {
+          if( $config[$section][$name] != $value ) {
                $validation[] = "Campo {$section} -> {$name} está errado.";
           }
      }
