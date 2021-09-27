@@ -1,0 +1,14 @@
+#!/bin/bash
+
+source php-utils
+
+CONFIG_HOME=$(get_filename_home ${ARQUIVO_CONFIG})
+SRC_ARQUIVO_CONFIG="${CONFIG_HOME}/${ARQUIVO_CONFIG}"
+
+if [ ! -f "${SRC_ARQUIVO_CONFIG}" ]; then
+	echo "config-db: Arquivo '${SRC_ARQUIVO_CONFIG}' não existe.";
+	exit 1;
+fi
+
+echo "Adicionando configuração: {$1} -> ${2}"
+crudini --set ${SRC_ARQUIVO_CONFIG} ${1} ${2} ${3};

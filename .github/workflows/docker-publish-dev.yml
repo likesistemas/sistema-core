@@ -1,4 +1,4 @@
-name: PHP 7.4 dev
+name: PHP Dev
 
 on:
   push:
@@ -13,22 +13,32 @@ on:
 jobs:
   
   test:
+    strategy:
+      matrix:
+        PHP: [56, 73, 74, 80]
+
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Prepare code
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
         run: |
           touch .env
           echo "IMAGE=sistema-core-dev" >> .env
-          echo "VERSAO=74-dev" >> .env
+          echo "VERSAO=${PHP_VERSION}-dev" >> .env
+          echo "PASTA_WWW=www${PHP_VERSION}" >> .env
 
       - name: Run tests dev
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
         run: |
           docker-compose \
-            --file docker-compose-74.yml \
-            --file docker-compose-74.dev.yml \
+            --file docker-compose.yml \
+            --file docker-compose-${PHP_VERSION}.yml \
+            --file docker-compose.dev.yml \
             up --build -d
           
           echo $(docker run -t --network lemp jwilder/dockerize \
@@ -44,26 +54,30 @@ jobs:
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
 
-          if [ "${CONTENT}" != "core|74" ]; then
+          if [ "${CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
-          if [ "${APP_CONTENT}" != "core|74" ]; then
+          if [ "${APP_CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi
 
           docker-compose \
-            --file docker-compose-74.yml \
-            --file docker-compose-74.dev.yml \
+            --file docker-compose.yml \
+            --file docker-compose-${PHP_VERSION}.yml \
+            --file docker-compose.dev.yml \
             down -v
 
       - name: Run tests prod
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
         run: |
           docker-compose \
-            --file docker-compose-74.yml \
-            --file docker-compose-74.dev.yml \
+            --file docker-compose.yml \
+            --file docker-compose-${PHP_VERSION}.yml \
+            --file docker-compose.dev.yml \
             --file docker-compose.prod.yml \
             up --build -d
           
@@ -80,12 +94,12 @@ jobs:
           echo "CHAMADA HTTP: ${CONTENT}";
           echo "CHAMADA APP: ${APP_CONTENT}";
 
-          if [ "${CONTENT}" != "core|74" ]; then
+          if [ "${CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
-          if [ "${APP_CONTENT}" != "core|74" ]; then
+          if [ "${APP_CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi
@@ -102,14 +116,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
-
       - name: Login to DockerHub
         uses: docker/login-action@v1 
         with:
@@ -123,17 +129,56 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
       
-      - name: Build and push
+      - name: PHP 5.6 -> Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          build-args: |
+            VERSAO_PHP=likesistemas/php-dev:56
+          push: true
+          tags: |
+            likesistemas/sistema-core-dev:56
+            likesistemas/sistema-core-dev:5.6
+            ghcr.io/likesistemas/sistema-core-dev:56
+            ghcr.io/likesistemas/sistema-core-dev:5.6
+
+      - name: PHP 7.3 -> Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          build-args: |
+            VERSAO_PHP=likesistemas/php-dev:73
+          push: true
+          tags: |
+            likesistemas/sistema-core-dev:latest
+            likesistemas/sistema-core-dev:73
+            likesistemas/sistema-core-dev:7.3
+            ghcr.io/likesistemas/sistema-core-dev:latest
+            ghcr.io/likesistemas/sistema-core-dev:73
+            ghcr.io/likesistemas/sistema-core-dev:7.3
+
+      - name: PHP 7.4 -> Build and push
         uses: docker/build-push-action@v2
         with:
           context: .
           build-args: |
             VERSAO_PHP=likesistemas/php-dev:74
           push: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache
           tags: |
             likesistemas/sistema-core-dev:74
             likesistemas/sistema-core-dev:7.4
             ghcr.io/likesistemas/sistema-core-dev:74
             ghcr.io/likesistemas/sistema-core-dev:7.4
+      
+      - name: PHP 8.0 -> Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          build-args: |
+            VERSAO_PHP=likesistemas/php-dev:80
+          push: true
+          tags: |
+            likesistemas/sistema-core-dev:80
+            likesistemas/sistema-core-dev:8.0
+            ghcr.io/likesistemas/sistema-core-dev:80
+            ghcr.io/likesistemas/sistema-core-dev:8.0
