@@ -38,7 +38,7 @@ jobs:
           docker-compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
-            --file docker-compose-${PHP_VERSION}.dev.yml \
+            --file docker-compose.dev.yml \
             up --build -d
           
           echo $(docker run -t --network lemp jwilder/dockerize \
@@ -67,7 +67,7 @@ jobs:
           docker-compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
-            --file docker-compose-${PHP_VERSION}.dev.yml \
+            --file docker-compose.dev.yml \
             down -v
 
       - name: Run tests prod
@@ -77,7 +77,7 @@ jobs:
           docker-compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
-            --file docker-compose-${PHP_VERSION}.dev.yml \
+            --file docker-compose.dev.yml \
             --file docker-compose.prod.yml \
             up --build -d
           
