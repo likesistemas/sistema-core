@@ -64,7 +64,11 @@ jobs:
             exit 1;
           fi
 
-          docker-compose -f docker-compose-${PHP_VERSION}.yml down -v
+          docker-compose \
+            --file docker-compose.yml \
+            --file docker-compose-${PHP_VERSION}.yml \
+            --file docker-compose-${PHP_VERSION}.dev.yml \
+            down -v
 
       - name: Run tests prod
         env:

@@ -62,7 +62,9 @@ jobs:
             exit 1;
           fi
 
-          docker-compose -f docker-compose-${PHP_VERSION}.yml down -v
+          docker-compose -f docker-compose.yml \
+            -f docker-compose-${PHP_VERSION}.yml \
+            down -v
 
       - name: Run tests app
         env:
