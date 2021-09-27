@@ -28,7 +28,7 @@ jobs:
         run: |
           touch .env
           echo "IMAGE=sistema-core-dev" >> .env
-          echo "VERSAO=${PHP_VERSION}" >> .env
+          echo "VERSAO=${PHP_VERSION}-dev" >> .env
           echo "PASTA_WWW=www${PHP_VERSION}" >> .env
           ln -s www74 www73
 
