@@ -15,7 +15,8 @@ RUN chmod +x /usr/local/bin/configure-db \
  && chmod +x /usr/local/bin/new-folder \
  && chmod +x /usr/local/bin/entrypoint-app \
  && chmod +x /usr/local/bin/clear-www \
- && chmod +x /usr/local/bin/run-app
+ && chmod +x /usr/local/bin/run-app \
+ && chmod +x /usr/local/bin/add-new-config
 
 COPY events/ /var/events/
 

@@ -43,14 +43,19 @@ $expectedConfig = [
 $validation = [];
 
 foreach($expectedConfig as $section => $values) {
+     if (!isset($config[$section])) {
+          $validation[] = "Section {$section} não existe.";
+          continue;
+     }     
+
      foreach($values as $name=>$value) {
-          if( isset($config[$section][$name]) ) {
+          if( !isset($config[$section][$name]) ) {
                $validation[] = "Campo {$section} -> {$name} não existe.";
                continue;
           }
 
           if( $config[$section][$name] != $value ) {
-               $validation[] = "Campo {$section} -> {$name} está errado.";
+               $validation[] = "Campo {$section} -> {$name} está errado: '{$value}'.";
           }
      }
 }
