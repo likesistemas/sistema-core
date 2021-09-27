@@ -15,6 +15,46 @@ if [ -n "$SOCKET_HOST" ]; then
 fi
 
 if [ -n "$MEMCACHE_HOST" ]; then
+	crudini --set ${1} memcache host ${MEMCACHE_HOST};
+	crudini --set ${1} memcache porta ${MEMCACHE_PORT:-11211};
+
 	crudini --set ${1} session tipo memcache;
 	crudini --set ${1} session dsnMemcache memcached://${MEMCACHE_HOST}:${MEMCACHE_PORT:-11211};
+fi
+
+if [ -n "$EMAIL_POP3" ]; then
+	crudini --set ${1} email pop3 ${EMAIL_POP3};
+fi
+
+if [ -n "$EMAIL_POP3_PORTA" ]; then
+	crudini --set ${1} email pop3Porta ${EMAIL_POP3_PORTA};
+fi
+
+if [ -n "$EMAIL_SMTP" ]; then
+	crudini --set ${1} email smtp ${EMAIL_SMTP};
+fi
+
+if [ -n "$EMAIL_SMTP_PORTA" ]; then
+	crudini --set ${1} email smtpPorta ${EMAIL_SMTP_PORTA};
+fi
+
+if [ -n "$EMAIL_USUARIO" ]; then
+	crudini --set ${1} email usuario ${EMAIL_USUARIO};
+	crudini --set ${1} email senha ${EMAIL_SENHA};
+fi
+
+if [ -n "$EMAIL_NOME" ]; then
+	crudini --set ${1} email nome ${EMAIL_NOME};
+fi
+
+if [ -n "$EMAIL_SSL" ]; then
+	crudini --set ${1} email ssl ${EMAIL_SSL};
+fi
+
+if [ -n "$AWS_KEY" ]; then
+	crudini --set ${1} aws key ${AWS_KEY};
+fi
+
+if [ -n "$AWS_SECRET" ]; then
+	crudini --set ${1} aws secret ${AWS_SECRET};
 fi

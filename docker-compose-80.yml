@@ -13,7 +13,7 @@ services:
             - VERSAO_PHP=likesistemas/php:80
         image: likesistemas/sistema-core:80-dev
         container_name: app
-        command: app create
+        command: app create && add-new-config php version 8.0
         environment:
             - PHP_NAME=lemp
             - APP_NAME=app
@@ -21,6 +21,14 @@ services:
             - DB_USER=root
             - DB_PASSWORD=123456
             - DB_NAME=php
+            - DB_HOST_SLAVE=mysql_slave
+            - MEMCACHE_HOST=memcache
+            - MEMCACHE_PORT=11212
+            - EMAIL_USUARIO=core@likesistemas.com.br
+            - EMAIL_SENHA=123456
+            - EMAIL_NOME=Ricardo
+            - AWS_KEY=like123456
+            - AWS_SECRET=78910
             - INSTALL_COMPOSER=true
             - COMPOSER_INSTALL=true
             - DB_MIGRATE=true

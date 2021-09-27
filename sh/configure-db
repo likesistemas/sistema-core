@@ -10,8 +10,6 @@ if [ -f "${SRC_ARQUIVO_CONFIG}" ] && [ -n "$DB_HOST" ]; then
 		DB_TYPE='ini';
 	fi
 
-	export DB_TYPE=$DB_TYPE
-
 	set-own ${SRC_ARQUIVO_CONFIG}
 
 	if [ "$DB_TYPE" = "ini" ]; then
