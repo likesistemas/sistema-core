@@ -30,13 +30,13 @@ jobs:
           echo "IMAGE=sistema-core-dev" >> .env
           echo "VERSAO=${PHP_VERSION}-dev" >> .env
           echo "PASTA_WWW=www${PHP_VERSION}" >> .env
-          ln -s www74 www73
 
       - name: Run tests dev
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
           docker-compose \
+            --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose-${PHP_VERSION}.dev.yml \
             up --build -d
@@ -71,6 +71,7 @@ jobs:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
           docker-compose \
+            --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose-${PHP_VERSION}.dev.yml \
             --file docker-compose.prod.yml \
