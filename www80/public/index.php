@@ -18,7 +18,7 @@ $expectedConfig = [
      'bd' => [
           'host' => 'mysql',
           'user' => 'root',
-          'password' => 'root',
+          'password' => '123456',
           'bd' => 'php',
           'hostSlave' => 'mysql_slave'
      ],
