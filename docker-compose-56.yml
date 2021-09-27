@@ -1,7 +1,7 @@
 version: '3.5'
 networks: 
     lemp:
-        name: lemp56
+        name: lemp
         driver: bridge
 
 services:
@@ -12,10 +12,10 @@ services:
             args:
             - VERSAO_PHP=likesistemas/php:56
         image: likesistemas/sistema-core:56-dev
-        container_name: app56
+        container_name: app
         command: app create
         environment:
-            - PHP_NAME=lemp56
+            - PHP_NAME=lemp
             - APP_NAME=app
             - DB_HOST=mysql
             - DB_USER=root
