@@ -10,6 +10,7 @@ services:
             - MEMCACHE_PORT=11212
             - EMAIL_USUARIO=core@likesistemas.com.br
             - EMAIL_SENHA=123456
+            - EMAIL_DE=contato@likesistemas.com.br
             - EMAIL_NOME=Ricardo
             - AWS_KEY=like123456
             - AWS_SECRET=78910

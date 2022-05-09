@@ -43,6 +43,10 @@ if [ -n "$EMAIL_USUARIO" ]; then
 	crudini --set ${1} email senha ${EMAIL_SENHA};
 fi
 
+if [ -n "$EMAIL_DE" ]; then
+	crudini --set ${1} email email ${EMAIL_DE};
+fi
+
 if [ -n "$EMAIL_NOME" ]; then
 	crudini --set ${1} email nome ${EMAIL_NOME};
 fi
