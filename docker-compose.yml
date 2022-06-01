@@ -52,7 +52,7 @@ services:
             - HOST_PHP=app
             - PORTA_PHP=9000
         ports:
-            - 80:80
+            - ${NGINX_PORT:-80}:80
         volumes:
             - ./www${PHP_VERSION}/:/var/www/public/
         links:

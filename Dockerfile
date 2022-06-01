@@ -2,6 +2,8 @@ ARG VERSAO_PHP=likesistemas/php:latest
 
 FROM ${VERSAO_PHP}
 
+RUN apt-get update && apt-get install -y tree && rm -rf /var/lib/apt/lists/*
+
 ENV VERSAO=1.1.0
 
 COPY sh/ /usr/local/bin/
@@ -33,3 +35,4 @@ RUN set-own ${PUBLIC_HTML}
 ENV FILES_FOLDER="files"
 ENV TEMP_FOLDER="temp"
 ENV LOGS_FOLDER="logs"
+ENV VOLUMES="${FILES_FOLDER} ${TEMP_FOLDER} ${LOGS_FOLDER} ${TEMP_FOLDER}/css/ ${TEMP_FOLDER}/js/ ${TEMP_FOLDER}/manifest/ ${TEMP_FOLDER}/object/"
