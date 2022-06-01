@@ -16,5 +16,5 @@ do
 done
 
 echo ""
-tree -L 2
+tree -L 2 -d
 echo ""
