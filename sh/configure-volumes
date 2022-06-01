@@ -6,10 +6,15 @@ VOLUME_HOME=$(get_filename_home ${ARQUIVO_CONFIG})
 
 echo "Criando volumes na pasta '${VOLUME_HOME}'...";
 cd ${VOLUME_HOME}
-new-folder ${TEMP_FOLDER}
-new-folder ${FILES_FOLDER}
-new-folder ${LOGS_FOLDER}
-new-folder "${TEMP_FOLDER}/css/"
-new-folder "${TEMP_FOLDER}/js/"
-new-folder "${TEMP_FOLDER}/manifest/"
-new-folder "${TEMP_FOLDER}/object/"
+
+VOLUMES_ARRAY=(${VOLUMES})
+
+for i in "${VOLUMES_ARRAY[@]}"
+do
+  :
+  new-folder ${i}
+done
+
+echo ""
+tree -L 2
+echo ""
