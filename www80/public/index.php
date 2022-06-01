@@ -13,6 +13,10 @@ testWriteFile("logs/dia/", true);
 testWriteFile("files/");
 testWriteFile("files/produto/", true);
 
+$versaoPhp = explode('.', phpversion());
+$versaoPhpFormatada = $versaoPhp[0] . $versaoPhp[1];
+$versaoPhpFormatadaComPonto = $versaoPhp[0] . '.' . $versaoPhp[1];
+
 $config = parse_ini_file(__DIR__ . "/../config.ini", true);
 $expectedConfig = [
      'bd' => [
@@ -36,7 +40,7 @@ $expectedConfig = [
           'secret' => '78910'
      ],
      'php' => [
-          'version' => '8.0'
+          'version' => $versaoPhpFormatadaComPonto
      ]
 ];
 
@@ -68,6 +72,5 @@ if( count($validation) > 0 ) {
      exit(1);
 }
 
-$versaoPhp = explode('.', phpversion());
-echo "core" . "|" . 
-     $versaoPhp[0] . $versaoPhp[1];
+
+echo "core" . "|" . $versaoPhpFormatada;
