@@ -1,4 +1,8 @@
 #!/bin/bash
 configure-volumes;
-configure-db;
+
+if [ -z $CONFIG_DISABLED ]; then
+    configure-db;
+fi
+
 configure-app ${APP_NAME};
