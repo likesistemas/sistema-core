@@ -18,6 +18,19 @@ $versaoPhpFormatada = $versaoPhp[0] . $versaoPhp[1];
 $versaoPhpFormatadaComPonto = $versaoPhp[0] . '.' . $versaoPhp[1];
 
 $config = parse_ini_file(__DIR__ . "/../config.ini", true);
+
+$emptyConfig = [
+     'bd' => [
+          'host' => '',
+          'user' => '',
+          'password' => '',
+          'bd' => ''
+     ],
+     'php' => [
+          'version' => $versaoPhpFormatadaComPonto
+     ]
+];
+
 $expectedConfig = [
      'bd' => [
           'host' => 'mysql',
@@ -65,6 +78,11 @@ foreach($expectedConfig as $section => $values) {
 }
 
 if( count($validation) > 0 ) {
+     if($config === $emptyConfig) {
+          echo "core" . "|" . $versaoPhpFormatada . "|empty";
+          return;
+     }
+
      echo "<pre>";
      echo join("\n", $validation);
      var_dump($config);

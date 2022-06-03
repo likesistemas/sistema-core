@@ -82,6 +82,37 @@ jobs:
             exit 1;
           fi
 
+      - name: Run tests config disabled
+        if: matrix.PHP == '80' 
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
+          docker-compose -f docker-compose.yml \
+            -f docker-compose-${PHP_VERSION}.yml \
+            -f docker-compose-config-disabled.yml \
+            up --build -d
+          
+          echo $(docker run -t --network lemp jwilder/dockerize \
+            -wait http://core_nginx/ \
+            -timeout 60s)
+
+          docker ps -a
+          docker logs app
+
+          CONTENT=$(curl -s "http://127.0.0.1/");
+
+          echo "CHAMADA HTTP: ${CONTENT}";
+
+          if [ "${CONTENT}" != "core|${PHP_VERSION}|empty" ]; then
+            echo "Chamada HTTP retornou errado: ${CONTENT}"
+            exit 1;
+          fi
+
+          docker-compose -f docker-compose.yml \
+            -f docker-compose-${PHP_VERSION}.yml \
+            -f docker-compose-config-disabled.yml \
+            down -v
+
       - name: Run tests prod
         env:
           PHP_VERSION: ${{ matrix.PHP }}
