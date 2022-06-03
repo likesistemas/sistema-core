@@ -1,4 +1,10 @@
 #!/bin/bash
 configure-volumes;
-configure-db;
+
+if [ -z $CONFIG_DISABLED ]; then
+    configure-db;
+else
+    echo "config-db: está desabilitado!";
+fi
+
 configure-app ${APP_NAME};
