@@ -15,7 +15,7 @@ jobs:
   test:
     strategy:
       matrix:
-        PHP: [73, 74, 80, 81, 82]
+        PHP: [73, 74, 80, 81]
 
     runs-on: ubuntu-latest
 
@@ -150,7 +150,7 @@ jobs:
 
     strategy:
       matrix:
-        PHP: [73, 74, 80, 81, 82]
+        PHP: [73, 74, 80, 81]
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
