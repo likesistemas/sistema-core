@@ -31,7 +31,7 @@ jobs:
           echo "VERSAO=${PHP_VERSION}-dev" >> .env
           echo "PASTA_WWW=www${PHP_VERSION}" >> .env
 
-      - name: Run tests dev
+      - name: Up environment
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
@@ -40,37 +40,57 @@ jobs:
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
             up --build -d
-          
+
+      - name: Wait environment
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
           echo $(docker run -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
             -timeout 60s)
 
+      - name: Logs environment
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
           docker ps -a
           docker logs app
 
+      - name: Test -> Http Request
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
           CONTENT=$(curl -s "http://127.0.0.1/");
-          APP_CONTENT=$(docker exec app app echo);
-
           echo "CHAMADA HTTP: ${CONTENT}";
-          echo "CHAMADA APP: ${APP_CONTENT}";
 
           if [ "${CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
 
+      - name: Test -> App Request
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
+          APP_CONTENT=$(docker exec app app echo);
+          echo "CHAMADA APP: ${APP_CONTENT}";        
+
           if [ "${APP_CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
             exit 1;
           fi
-
+      
+      - name: Down environment
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
           docker-compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
             down -v
 
-      - name: Run tests prod
+      - name: Production -> Up environment
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
@@ -80,24 +100,40 @@ jobs:
             --file docker-compose.dev.yml \
             --file docker-compose.prod.yml \
             up --build -d
-          
+      
+      - name: Production -> Wait environment
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
           echo $(docker run -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
             -timeout 60s)
 
+      - name: Production -> Logs environment
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
           docker ps -a
           docker logs app
 
+      - name: Production -> Http test
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
           CONTENT=$(curl -s "http://127.0.0.1/");
-          APP_CONTENT=$(docker exec app app echo);
-
           echo "CHAMADA HTTP: ${CONTENT}";
-          echo "CHAMADA APP: ${APP_CONTENT}";
 
           if [ "${CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada HTTP retornou errado: ${CONTENT}"
             exit 1;
           fi
+
+      - name: Production -> App test
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
+          APP_CONTENT=$(docker exec app app echo);
+          echo "CHAMADA APP: ${APP_CONTENT}";        
 
           if [ "${APP_CONTENT}" != "core|${PHP_VERSION}" ]; then
             echo "Chamada APP retornou errado: ${APP_CONTENT}"
