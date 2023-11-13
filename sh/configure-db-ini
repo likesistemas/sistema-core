@@ -62,3 +62,7 @@ fi
 if [ -n "$AWS_SECRET" ]; then
 	crudini --set ${1} aws secret ${AWS_SECRET};
 fi
+
+if [ -n "$SENTRY_DSN" ]; then
+	crudini --set ${1} sentry dsn ${SENTRY_DSN};
+fi
