@@ -30,6 +30,9 @@ jobs:
           echo "PHP_VERSION=${PHP_VERSION}"
           echo "VERSAO=${PHP_VERSION}-dev" >> .env
           echo "PASTA_WWW=www${PHP_VERSION}" >> .env
+          ln -s www80 www81
+          ln -s www80 www82
+          ln -s www80 www83
 
       - name: Up environment
         env:
