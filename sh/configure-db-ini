@@ -22,6 +22,14 @@ if [ -n "$MEMCACHE_HOST" ]; then
 	crudini --set ${1} session dsnMemcache memcached://${MEMCACHE_HOST}:${MEMCACHE_PORT:-11211};
 fi
 
+if [ -n "$REDIS_HOST" ]; then
+	crudini --set ${1} redis host ${REDIS_HOST};
+
+	if [ -n "$REDIS_PORT" ]; then
+		crudini --set ${1} redis porta ${REDIS_PORT};
+	fi
+fi
+
 if [ -n "$EMAIL_POP3" ]; then
 	crudini --set ${1} email pop3 ${EMAIL_POP3};
 fi
