@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Prepare code
         env:
@@ -38,7 +38,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose \
+          docker compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
@@ -87,7 +87,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose \
+          docker compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
@@ -97,7 +97,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose \
+          docker compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
@@ -148,13 +148,13 @@ jobs:
 
     strategy:
       matrix:
-        PHP: [73, 74, 80, 81, 82, 83]
+        PHP: [74, 80, 81, 82, 83]
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1

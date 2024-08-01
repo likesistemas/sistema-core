@@ -15,12 +15,12 @@ jobs:
   test:
     strategy:
       matrix:
-        PHP: [73, 74, 80, 81, 82, 83]
+        PHP: [74, 80, 81, 82, 83]
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Prepare code
         env:
@@ -38,7 +38,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose -f docker-compose.yml \
+          docker compose -f docker-compose.yml \
             -f docker-compose-${PHP_VERSION}.yml \
             up --build -d
       
@@ -85,7 +85,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose -f docker-compose.yml \
+          docker compose -f docker-compose.yml \
             -f docker-compose-${PHP_VERSION}.yml \
             down -v
 
@@ -94,7 +94,7 @@ jobs:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
           APP_RUN=$(
-            docker-compose -f docker-compose.yml \
+            docker compose -f docker-compose.yml \
               -f docker-compose-${PHP_VERSION}.yml \
               run -w /var/www/ --entrypoint entrypoint-app app echo
           )
@@ -110,7 +110,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose -f docker-compose.yml \
+          docker compose -f docker-compose.yml \
             -f docker-compose-${PHP_VERSION}.yml \
             -f docker-compose-config-disabled.yml \
             up --build -d
@@ -131,7 +131,7 @@ jobs:
             exit 1;
           fi
 
-          docker-compose -f docker-compose.yml \
+          docker compose -f docker-compose.yml \
             -f docker-compose-${PHP_VERSION}.yml \
             -f docker-compose-config-disabled.yml \
             down -v
@@ -140,7 +140,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose -f docker-compose.yml \
+          docker compose -f docker-compose.yml \
             -f docker-compose-${PHP_VERSION}.yml \
             -f docker-compose.prod.yml \
             up --build -d
@@ -195,7 +195,7 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
