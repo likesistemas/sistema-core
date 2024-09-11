@@ -15,7 +15,6 @@ testWriteFile("files/produto/", true);
 
 $versaoPhp = explode('.', phpversion());
 $versaoPhpFormatada = $versaoPhp[0] . $versaoPhp[1];
-$versaoPhpFormatadaComPonto = $versaoPhp[0] . '.' . $versaoPhp[1];
 
 $config = parse_ini_file(__DIR__ . "/../config.ini", true);
 
@@ -26,9 +25,6 @@ $emptyConfig = [
           'password' => '',
           'bd' => ''
      ],
-     'php' => [
-          'version' => $versaoPhpFormatadaComPonto
-     ]
 ];
 
 $expectedConfig = [
@@ -53,7 +49,7 @@ $expectedConfig = [
           'secret' => '78910'
      ],
      'php' => [
-          'version' => $versaoPhpFormatadaComPonto
+          'version' => $versaoPhpFormatada
      ]
 ];
 

@@ -1,9 +1,9 @@
 # K6.io
 
-Para rodar os testes iniciar o PHP usando o docker-compose da versão escolhida e executar o k6 como o exemplo abaixo usando o PHP 7.3.
+Para rodar os testes iniciar o PHP usando o `docker compose` da versão escolhida e executar o k6 como o exemplo abaixo usando o PHP 7.3.
 
 ```shell
-docker-compose -f docker-compose-73.yml up --build -d
+docker compose -f docker-compose-73.yml up --build -d
 k6 run -e PHP_VERSION=73 --vus 40 --duration 30s index.js
 ```
 

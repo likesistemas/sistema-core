@@ -15,12 +15,12 @@ jobs:
   test:
     strategy:
       matrix:
-        PHP: [73, 74, 80, 81, 82, 83]
+        PHP: [74, 80, 81, 82, 83]
 
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Prepare code
         env:
@@ -38,7 +38,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose \
+          docker compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
@@ -48,7 +48,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          echo $(docker run -t --network lemp jwilder/dockerize \
+          echo $(docker run --rm -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
             -timeout 60s)
 
@@ -58,6 +58,14 @@ jobs:
         run: |
           docker ps -a
           docker logs app
+
+      - name: Add Config PHP Version
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
+          docker compose -f docker-compose.yml \
+            -f docker-compose-${PHP_VERSION}.yml \
+            exec app add-new-config php version ${PHP_VERSION}
 
       - name: Test -> Http Request
         env:
@@ -87,7 +95,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose \
+          docker compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
@@ -97,7 +105,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          docker-compose \
+          docker compose \
             --file docker-compose.yml \
             --file docker-compose-${PHP_VERSION}.yml \
             --file docker-compose.dev.yml \
@@ -108,7 +116,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          echo $(docker run -t --network lemp jwilder/dockerize \
+          echo $(docker run --rm -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
             -timeout 60s)
 
@@ -118,6 +126,14 @@ jobs:
         run: |
           docker ps -a
           docker logs app
+    
+      - name: Add Config PHP Version
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
+          docker compose -f docker-compose.yml \
+            -f docker-compose-${PHP_VERSION}.yml \
+            exec app add-new-config php version ${PHP_VERSION}
 
       - name: Production -> Http test
         env:
@@ -148,13 +164,13 @@ jobs:
 
     strategy:
       matrix:
-        PHP: [73, 74, 80, 81, 82, 83]
+        PHP: [74, 80, 81, 82, 83]
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
