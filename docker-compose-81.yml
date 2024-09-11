@@ -1,9 +1,6 @@
-version: '3.5'
-
 services:
 
     app:
-        command: app create && add-new-config php version 8.1
         environment:
             - DB_HOST_SLAVE=mysql_slave
             - MEMCACHE_HOST=memcache
