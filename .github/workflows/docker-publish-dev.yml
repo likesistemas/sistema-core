@@ -48,7 +48,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          echo $(docker run -t --network lemp jwilder/dockerize \
+          echo $(docker run --rm -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
             -timeout 60s)
 
@@ -116,7 +116,7 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.PHP }}
         run: |
-          echo $(docker run -t --network lemp jwilder/dockerize \
+          echo $(docker run --rm -t --network lemp jwilder/dockerize \
             -wait http://core_nginx/ \
             -timeout 60s)
 
@@ -126,6 +126,14 @@ jobs:
         run: |
           docker ps -a
           docker logs app
+    
+      - name: Add Config PHP Version
+        env:
+          PHP_VERSION: ${{ matrix.PHP }}
+        run: |
+          docker compose -f docker-compose.yml \
+            -f docker-compose-${PHP_VERSION}.yml \
+            exec app add-new-config php version ${PHP_VERSION}
 
       - name: Production -> Http test
         env:

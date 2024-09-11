@@ -25,9 +25,6 @@ $emptyConfig = [
           'password' => '',
           'bd' => ''
      ],
-     'php' => [
-          'version' => $versaoPhpFormatada
-     ]
 ];
 
 $expectedConfig = [
