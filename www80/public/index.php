@@ -81,7 +81,7 @@ if( count($validation) > 0 ) {
 
      echo "<pre>";
      echo join("\n", $validation);
-     var_dump($config);
+
      echo "</pre>";
      exit(1);
 }
